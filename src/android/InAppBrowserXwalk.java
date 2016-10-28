@@ -160,10 +160,15 @@ public class InAppBrowserXwalk extends CordovaPlugin {
                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.FILL_PARENT );
                 lp.weight = 1;
                 lp.height = LayoutParams.FILL_PARENT;
+
                 xWalkWebView.setLayoutParams(lp);
-                XWalkCookieManager mCookieManager = new XWalkCookieManager();
+                xWalkWebView.getSettings().setUseWideViewPort(true);
+                xWalkWebView.setInitialScale(100);XWalkCookieManager
+
+                mCookieManager = new XWalkCookieManager();
                 mCookieManager.setAcceptCookie(true);
                 mCookieManager.setAcceptFileSchemeCookies(true);
+
                 xWalkWebView.setResourceClient(new MyResourceClient(xWalkWebView));
                 xWalkWebView.loadAppFromManifest(pathManifest, null);
 
@@ -176,7 +181,7 @@ public class InAppBrowserXwalk extends CordovaPlugin {
 
     private void setupInAppBrowser (final JSONArray data, final String locationTitle){
 
-                android.util.Log.v("[InAppBrowserXwalk]", "setupInAppBrowser started");
+                android.util.Log.v("InAppBrowserXwalk", "setupInAppBrowser started");
 
                 String toolbarTopColor = "#FFFFFF";
                 String toolbarBottomColor = "#FFFFFF";
@@ -195,54 +200,54 @@ public class InAppBrowserXwalk extends CordovaPlugin {
 
                 if(data != null && data.length() > 1) {
 
-                    android.util.Log.v("[InAppBrowserXwalk]", "json parsing started");
+                    android.util.Log.v("InAppBrowserXwalk", "json parsing started");
 
                     try {
                             JSONObject options = new JSONObject(data.getString(1));
 
                             if(!options.isNull("toolbarTopColor")) {
                                 toolbarTopColor = options.getString("toolbarTopColor");
-                                android.util.Log.v("[InAppBrowserXwalk]", "toolbarTopColor:" + toolbarTopColor);
+                                android.util.Log.v("InAppBrowserXwalk", "toolbarTopColor:" + toolbarTopColor);
                             }
                             if(!options.isNull("toolbarBottomColor")) {
                                 toolbarBottomColor = options.getString("toolbarBottomColor");
-                                android.util.Log.v("[InAppBrowserXwalk]", "toolbarBottomColor:" + toolbarBottomColor);
+                                android.util.Log.v("InAppBrowserXwalk", "toolbarBottomColor:" + toolbarBottomColor);
                             }
                             if(!options.isNull("toolbarTopHeight")) {
                                 toolbarTopHeight = options.getInt("toolbarTopHeight");
-                                android.util.Log.v("[InAppBrowserXwalk]", "toolbarTopHeight:" + toolbarTopHeight);
+                                android.util.Log.v("InAppBrowserXwalk", "toolbarTopHeight:" + toolbarTopHeight);
                             }
                             if(!options.isNull("toolbarBottomHeight")) {
                                 toolbarBottomHeight = options.getInt("toolbarBottomHeight");
-                                android.util.Log.v("[InAppBrowserXwalk]", "toolbarBottomHeight:" + toolbarBottomHeight);
+                                android.util.Log.v("InAppBrowserXwalk", "toolbarBottomHeight:" + toolbarBottomHeight);
                             }
                             if(!options.isNull("closeButtonText")) {
                                 closeButtonText = options.getString("closeButtonText");
-                                android.util.Log.v("[InAppBrowserXwalk]", "closeButtonText:" + closeButtonText);
+                                android.util.Log.v("InAppBrowserXwalk", "closeButtonText:" + closeButtonText);
                             }
                             if(!options.isNull("closeButtonSize")) {
                                 closeButtonSize = options.getInt("closeButtonSize");
-                                android.util.Log.v("[InAppBrowserXwalk]", "closeButtonSize:" + closeButtonSize);
+                                android.util.Log.v("InAppBrowserXwalk", "closeButtonSize:" + closeButtonSize);
                             }
                             if(!options.isNull("closeButtonColor")) {
                                 closeButtonColor = options.getString("closeButtonColor");
-                                android.util.Log.v("[InAppBrowserXwalk]", "closeButtonColor:" + closeButtonColor);
+                                android.util.Log.v("InAppBrowserXwalk", "closeButtonColor:" + closeButtonColor);
                             }
                             if(!options.isNull("locationUrlColor")) {
                                 locationUrlColor = options.getString("locationUrlColor");
-                                android.util.Log.v("[InAppBrowserXwalk]", "locationUrlColor:" + locationUrlColor);
+                                android.util.Log.v("InAppBrowserXwalk", "locationUrlColor:" + locationUrlColor);
                             }
                             if(!options.isNull("locationUrlSize")) {
                                 locationUrlSize = options.getInt("locationUrlSize");
-                                android.util.Log.v("[InAppBrowserXwalk]", "locationUrlSize:" + locationUrlSize);
+                                android.util.Log.v("InAppBrowserXwalk", "locationUrlSize:" + locationUrlSize);
                             }
                             if(!options.isNull("openHidden")) {
                                 openHidden = options.getBoolean("openHidden");
-                                android.util.Log.v("[InAppBrowserXwalk]", "openHidden:" + openHidden);
+                                android.util.Log.v("InAppBrowserXwalk", "openHidden:" + openHidden);
                             }
                         }
                     catch (JSONException ex) {
-                        android.util.Log.v("[InAppBrowserXwalk]", "json parsing error ex:" + ex);
+                        android.util.Log.v("InAppBrowserXwalk", "json parsing error ex:" + ex);
                     }
                 }
 
@@ -303,7 +308,7 @@ public class InAppBrowserXwalk extends CordovaPlugin {
                 if(!openHidden) {
                     dialog.show();
                 }
-                android.util.Log.v("[InAppBrowserXwalk]", "setupFinished");
+                android.util.Log.v("InAppBrowserXwalk", "setupFinished");
     }
 
     public void hideBrowser() {
@@ -374,7 +379,7 @@ public class InAppBrowserXwalk extends CordovaPlugin {
 
         String jsWrapper = "(function(d) { var c = d.createElement('style'); c.innerHTML = %s; d.body.appendChild(c); })(document)";
 
-        android.util.Log.v("[InAppBrowserXwalk]", "run jsWrapper:" + jsWrapper);
+        android.util.Log.v("InAppBrowserXwalk", "run jsWrapper:" + jsWrapper);
 
         String scriptToInject;
 
@@ -391,7 +396,7 @@ public class InAppBrowserXwalk extends CordovaPlugin {
             @Override
             public void run() {
 
-                android.util.Log.v("[InAppBrowserXwalk]", "run css finalScriptToInject:" + finalScriptToInject);
+                android.util.Log.v("InAppBrowserXwalk", "run css finalScriptToInject:" + finalScriptToInject);
 
                 //xWalkWebView.load("javascript:" + finalScriptToInject, "");
                 xWalkWebView.evaluateJavascript(finalScriptToInject, null);
